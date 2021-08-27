@@ -1,0 +1,11 @@
+type Places @model {
+  id: ID!
+  city: String!
+  country: String!
+  description: String
+  dateVisited: AWSDate
+  tags: [String]
+  favourite: Boolean
+  visited: Boolean
+  imgUrl: String!
+}
