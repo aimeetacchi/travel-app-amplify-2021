@@ -18,6 +18,7 @@ export const createPlaces = /* GraphQL */ `
       imgUrl
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -38,6 +39,7 @@ export const updatePlaces = /* GraphQL */ `
       imgUrl
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -58,6 +60,7 @@ export const deletePlaces = /* GraphQL */ `
       imgUrl
       createdAt
       updatedAt
+      owner
     }
   }
 `;

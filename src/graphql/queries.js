@@ -15,6 +15,7 @@ export const getPlaces = /* GraphQL */ `
       imgUrl
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -37,6 +38,7 @@ export const listPlaces = /* GraphQL */ `
         imgUrl
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }

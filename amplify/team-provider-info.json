@@ -10,6 +10,11 @@
       "StackName": "amplify-travelappamplify2021-dev-224503",
       "StackId": "arn:aws:cloudformation:eu-west-2:419068846218:stack/amplify-travelappamplify2021-dev-224503/0a3cfc60-0780-11ec-8e4f-06b03d104c62",
       "AmplifyAppId": "d36e3rz9n8j44b"
+    },
+    "categories": {
+      "auth": {
+        "travelappamplify2021e58863b3": {}
+      }
     }
   }
 }

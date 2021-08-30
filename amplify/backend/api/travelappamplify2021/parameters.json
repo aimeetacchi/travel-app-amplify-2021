@@ -1,5 +1,11 @@
 {
   "AppSyncApiName": "travelappamplify2021",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authtravelappamplify2021e58863b3",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

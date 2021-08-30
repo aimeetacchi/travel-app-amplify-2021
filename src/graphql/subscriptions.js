@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreatePlaces = /* GraphQL */ `
-  subscription OnCreatePlaces {
-    onCreatePlaces {
+  subscription OnCreatePlaces($owner: String!) {
+    onCreatePlaces(owner: $owner) {
       id
       city
       country
@@ -15,12 +15,13 @@ export const onCreatePlaces = /* GraphQL */ `
       imgUrl
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdatePlaces = /* GraphQL */ `
-  subscription OnUpdatePlaces {
-    onUpdatePlaces {
+  subscription OnUpdatePlaces($owner: String!) {
+    onUpdatePlaces(owner: $owner) {
       id
       city
       country
@@ -32,12 +33,13 @@ export const onUpdatePlaces = /* GraphQL */ `
       imgUrl
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeletePlaces = /* GraphQL */ `
-  subscription OnDeletePlaces {
-    onDeletePlaces {
+  subscription OnDeletePlaces($owner: String!) {
+    onDeletePlaces(owner: $owner) {
       id
       city
       country
@@ -49,6 +51,7 @@ export const onDeletePlaces = /* GraphQL */ `
       imgUrl
       createdAt
       updatedAt
+      owner
     }
   }
 `;
