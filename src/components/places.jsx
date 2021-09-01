@@ -34,10 +34,10 @@ const Places = () => {
       { placesState.length > 0 ?
           placesState.map((place, index) => (
             <div key={place.id ? place.id : index} style={styles.place}>
-              <img src={`https://${place.file.bucket}.s3.amazonaws.com/${place.file.key}`} style={styles.placeImg} alt='place'/>
+              {place.file.key !== 'public/undefined' && <img src={`https://${place.file.bucket}.s3.amazonaws.com/${place.file.key}`} style={styles.placeImg} alt='place'/>}
               <p style={styles.placeCity}>{place.city}</p>
               <p style={styles.placeCountry}>{place.country}</p>
-              <p style={styles.placeDescription}>{place.description}</p>
+              {place.description && <p style={styles.placeDescription}>{place.description}</p>}
             </div>
           )) : 'You have not added any places yet.'
       }

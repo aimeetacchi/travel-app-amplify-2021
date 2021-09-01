@@ -120,16 +120,12 @@ const AddPlace = () => {
                 value={formState.description}
                 placeholder="Add a short description about the place"
             />
-            <label style={styles.fileUpload}>
-                <input
-                    style={styles.fileUploadInput}
-                    type="file"
-                    name="place"
-                    required
-                    onChange={e => setImageState(e.target.files[0])}
-                />
-                Add an Image
-            </label>
+            <input
+                type="file"
+                // required
+                onChange={e => setImageState(e.target.files[0])}
+            />
+
             
             <input type="submit" style={styles.button} value="Add Place" />
         </form>
