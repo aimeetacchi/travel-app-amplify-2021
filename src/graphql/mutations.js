@@ -12,10 +12,13 @@ export const createPlaces = /* GraphQL */ `
       country
       description
       dateVisited
-      tags
       favourite
       visited
-      imgUrl
+      file {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       owner
@@ -33,10 +36,13 @@ export const updatePlaces = /* GraphQL */ `
       country
       description
       dateVisited
-      tags
       favourite
       visited
-      imgUrl
+      file {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       owner
@@ -54,10 +60,13 @@ export const deletePlaces = /* GraphQL */ `
       country
       description
       dateVisited
-      tags
       favourite
       visited
-      imgUrl
+      file {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       owner

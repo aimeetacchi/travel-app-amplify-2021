@@ -9,10 +9,13 @@ export const getPlaces = /* GraphQL */ `
       country
       description
       dateVisited
-      tags
       favourite
       visited
-      imgUrl
+      file {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       owner
@@ -32,10 +35,13 @@ export const listPlaces = /* GraphQL */ `
         country
         description
         dateVisited
-        tags
         favourite
         visited
-        imgUrl
+        file {
+          bucket
+          region
+          key
+        }
         createdAt
         updatedAt
         owner

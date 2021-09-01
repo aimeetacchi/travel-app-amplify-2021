@@ -55,5 +55,18 @@
         }
       ]
     }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "providerPlugin": "awscloudformation",
+      "type": "manual"
+    }
+  },
+  "storage": {
+    "travelappimages": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }
