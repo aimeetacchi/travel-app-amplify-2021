@@ -9,6 +9,13 @@ export const getPlaces = (places) => {
     }
 }
 
+export const errPlaces = (err) => {
+    return {
+        type: Types.FAILED_GET_PLACES,
+        payload: err
+    }
+}
+
 
 // ADD PLACE
 export const addNewPlace = (place) => {
