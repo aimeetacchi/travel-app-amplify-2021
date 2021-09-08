@@ -101,8 +101,11 @@ const AddPlace = () => {
     }
     
     const addPlace = async (e) => {
+       
         e.preventDefault();
         console.log('this is running! no errors')
+        // Reset the form state ====
+        
             try {
                 const result = await Storage.put(imageState.name, imageState, {
                     contentType: 'image/jpg'
@@ -121,7 +124,7 @@ const AddPlace = () => {
                        description: formState.description,
                        favourite: formState.favourite,
                        file: image
-                   })
+                   });
                 }
     
             } catch (error) {
@@ -134,6 +137,7 @@ const AddPlace = () => {
             console.log('calling...')
             callAPIcreatePlaces(places);
         }
+    // eslint-disable-next-line
     }, [places])
 
     useEffect(() => { 

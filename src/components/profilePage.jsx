@@ -109,6 +109,7 @@ const ProfilePage = () => {
 
     useEffect(() => {
         fetchProfileInfo()
+        // eslint-disable-next-line
     }, [])
         
     return (
