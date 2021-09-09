@@ -37,3 +37,24 @@ export const failedAddPlace = (err) => {
         payload: err
     }
 }
+
+// Delete Place
+export const deleteSelectedPlace = (place) => {
+    return {
+        type: Types.DELETE_SELECTED_PLACE,
+        payload: place
+    }
+}
+
+export const deletePlaceComplete = () => {
+    return {
+        type: Types.COMPLETE_DELETE_PLACE,
+    }
+}
+
+export const failedDeletePlace = (err) => {
+    return {
+        type: Types.FAILED_DELETE_PLACE,
+        payload: err
+    }
+}

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Search from './search'
 import { API, graphqlOperation } from 'aws-amplify'
 import { listPlaces } from '../graphql/queries'
-import { getPlaces, errPlaces} from '../actions/places'
+import { deletePlaces } from '../graphql/mutations'
+import { getPlaces, errPlaces, deleteSelectedPlace, deletePlaceComplete, failedDeletePlace} from '../actions/places'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -15,17 +16,18 @@ import {
 } from '@material-ui/core/';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles({
   root: {
       width: '100%',
   },
   container: {
-    width: 400,
+    width: '90%',
     margin: '20px auto',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center'
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'center'
   },
   place: {  
     marginBottom: 15
@@ -81,36 +83,60 @@ const Places = () => {
             });
         });
       }
+      
+      const deletePlace = async (place) => {
+        console.log('deleting....', place)
+
+        const placeDetails = {
+          id: place,
+        };
+
+        try {
+          const placesData = await API.graphql(graphqlOperation(deletePlaces, {input: placeDetails}))
+          const deletedPlace = placesData.data.deletePlaces.items
+          // Dispatch action - getPlaces passing the places array
+          dispatch(deleteSelectedPlace(deletedPlace))
+          dispatch(deletePlaceComplete());
+        } catch (err) { 
+          dispatch(failedDeletePlace(err))
+          console.log('error deleting places')
+        }
+      }
 
     useEffect(() => {
       fetchPlaces()
       // eslint-disable-next-line
-    }, [newPlace])
+    }, [newPlace, placesState])
 
     return (
       <>
         <Search search={search} setSearch={setSearch} />
         <Box className={classes.container}>
-          { placesState.length > 0 ?
-              searchPlace(placesState).map((place, index) => (
-                <Card key={place.id ? place.id : index} className={classes.place}>
-                  <CardContent>
-                    {place.file.key !== 'public/undefined' && <img src={`https://${place.file.bucket}.s3.amazonaws.com/${place.file.key}`} className={classes.placeImg} alt='place'/>}
-                    <Grid container spacing={2}>
-                      <Grid item xs={10}>
-                        <Typography variant="h2" className={classes.placeCountry}>{place.country}</Typography>
+          <Grid container>
+            { placesState.length > 0 ?
+                searchPlace(placesState).map((place, index) => (
+                  <Grid item xs={12} lg={6}>
+                    <Card key={place.id ? place.id : index} className={classes.place}>
+                      <div onClick={() => deletePlace(place.id)} className={classes.delete}><DeleteForeverIcon/></div>
+                      <CardContent>
+                        {place.file.key !== 'public/undefined' && <img src={`https://${place.file.bucket}.s3.amazonaws.com/${place.file.key}`} className={classes.placeImg} alt='place'/>}
+                        <Grid container spacing={2}>
+                          <Grid item xs={10}>
+                            <Typography variant="h2" className={classes.placeCountry}>{place.country}</Typography>
 
-                        <Typography variant="body1" className={classes.placeCity}>{place.city}</Typography>
+                            <Typography variant="body1" className={classes.placeCity}>{place.city}</Typography>
 
-                        {place.description && <Typography variant="body1" className={classes.placeDescription}>{place.description}</Typography>}
-                      </Grid>
-                      <Grid item xs={2}> <Typography variant="body1">{place.favourite && (<FavoriteIcon/>)}</Typography></Grid>
-                    </Grid>
-                  
-                  </CardContent>
-                </Card>
-              )) : 'You have not added any places yet.'
-          }
+                            {place.description && <Typography variant="body1" className={classes.placeDescription}>{place.description}</Typography>}
+                          </Grid>
+                          <Grid item xs={2}> <Typography variant="body1">{place.favourite && (<FavoriteIcon/>)}</Typography></Grid>
+                        </Grid>
+                      
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                )) : 'You have not added any places yet.'
+            }
+          </Grid>
         </Box>
       </>
     )
