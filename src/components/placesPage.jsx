@@ -5,16 +5,21 @@ import Places from './places';
 
 import {
     Grid,
+    Container,
 } from '@material-ui/core/';
 
 const placesPage = () => {
     return (
         <Grid container>
-            <Grid item xs={12} md={6} lg={4}>
-                <AddPlace />
+            <Grid item xs={12}>
+                <Container maxWidth="md">
+                    <AddPlace />
+                </Container>
             </Grid>
-            <Grid item xs={12} md={6} lg={8}>
-                <Places /> 
+            <Grid item xs={12}>
+                <Container maxWidth="md">
+                    <Places /> 
+                </Container>
             </Grid>
         </Grid>
     )

@@ -41,7 +41,7 @@ const Search = ({search, setSearch}) => {
                     className={classes.formField}
                     label="Search Place"
                     variant="outlined"
-                    color="secondary"
+                    color="primary"
                     onChange={e => setSearch(e.target.value)}
                     value={search}
                     placeholder="Search Place..."

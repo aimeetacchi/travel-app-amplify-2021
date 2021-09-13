@@ -11,6 +11,7 @@ import {
     Box,
     Checkbox,
     FormControlLabel,
+    Grid,
   } from '@material-ui/core/';
 
 const useStyles = makeStyles({
@@ -18,7 +19,6 @@ const useStyles = makeStyles({
         width: '100%',
     },
     container: {
-        width: 400,
         padding: 0,
         margin: '0 auto',
         display: 'flex',
@@ -38,15 +38,16 @@ const useStyles = makeStyles({
         }
     },
     submitbutton: {
-        backgroundColor: 'rebeccaPurple',
+        backgroundColor: '#57CC99',
         color: 'white',
         outline: 'none',
         fontSize: 18,
         padding: '12px 0px',
         border: 'none',
+        width: '100%',
 
         '&:hover': {
-            backgroundColor: 'purple',
+            backgroundColor: '#80ED99',
         }
     }
 })
@@ -82,6 +83,7 @@ const AddPlace = () => {
         setFormState({ ...formState, [key]: value })
     }
 
+    // Calling Add Place API function
     const callAPIcreatePlaces =  async(place) => {
             try {             
                
@@ -93,6 +95,28 @@ const AddPlace = () => {
                 dispatch(addNewPlace(placeData));
                 // RUN COMPLETE ACTION
                 dispatch(addPlaceComplete());
+
+                setPlacesState({
+                    country: '',
+                    city: '',
+                    description: '',
+                    favourite: false,
+                    file: null
+                });
+
+                setFormState({
+                    country: '',
+                    city: '',
+                    description: '',
+                    favourite: false,
+                    file: null
+                })
+
+                setImageState({
+                    file: null
+                })
+
+
             } catch (err) {
                 console.log('error creating place:', err)
                 // RUN FAIL ACTION ----
@@ -100,6 +124,7 @@ const AddPlace = () => {
             }
     }
     
+    // ADD Place Function ====
     const addPlace = async (e) => {
        
         e.preventDefault();
@@ -145,61 +170,71 @@ const AddPlace = () => {
       }, [])
 
     return (
-        <Box className={classes.root}>
+        <Box mb={5} className={classes.root}>
             <form className={classes.container} onSubmit={addPlace}>
-                <TextField
-                    className={classes.formField}
-                    label="Add Country"
-                    variant="outlined"
-                    color="secondary"
-                    onChange={e => setInput('country', e.target.value)}
-                    value={formState.name}
-                    placeholder="Add Country"
-                    // error={countryErr}
-                />
-                <TextField
-                    className={classes.formField}
-                    label="Add City"
-                    variant="outlined"
-                    color="secondary"
-                    onChange={e => setInput('city', e.target.value)}
-                    value={formState.name}
-                    placeholder="Add City"
-                    // error={cityErr}
-                />
-
-                <FormControlLabel
-                    label="Favourite"
-                    control={
-                    <Checkbox
-                        checked={formState.favourite}
-                        onChange={e => setInput('favourite', e.target.checked)}
-                        name="favourite"
-                        color="primary"
-                    />
-                    } 
-                />
-                
-                <TextField
-                    className={classes.formField}
-                    label="Add Description"
-                    variant="outlined"
-                    color="secondary"
-                    onChange={e => setInput('description', e.target.value)}
-                    value={formState.description}
-                    placeholder="Add a short description about the place"
-                    multiline
-                    rows={4}
-                    // error={descriptionErr}
-                />
-                
-                <TextField
-                    type="file"
-                    color="secondary"
-                    onChange={e => setImageState(e.target.files[0])}
-                />
-                
-                <input type="submit" className={classes.submitbutton} value="Add Place" />
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            className={classes.formField}
+                            label="Add Country"
+                            variant="outlined"
+                            color="primary"
+                            onChange={e => setInput('country', e.target.value)}
+                            value={formState.name}
+                            placeholder="Add Country"
+                            // error={countryErr}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            className={classes.formField}
+                            label="Add City"
+                            variant="outlined"
+                            color="primary"
+                            onChange={e => setInput('city', e.target.value)}
+                            value={formState.name}
+                            placeholder="Add City"
+                            // error={cityErr}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            className={classes.formField}
+                            label="Add Description"
+                            variant="outlined"
+                            color="primary"
+                            onChange={e => setInput('description', e.target.value)}
+                            value={formState.description}
+                            placeholder="Add a short description about the place"
+                            multiline
+                            rows={4}
+                            // error={descriptionErr}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>         
+                        <TextField
+                            type="file"
+                            color="primary"
+                            onChange={e => setImageState(e.target.files[0])}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}> 
+                        <FormControlLabel
+                            label="Favourite"
+                            control={
+                                <Checkbox
+                                    checked={formState.favourite}
+                                    onChange={e => setInput('favourite', e.target.checked)}
+                                    name="favourite"
+                                    color="primary"
+                                />
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <input type="submit" className={classes.submitbutton} value="Add Place" />
+                    </Grid>
+                </Grid>
             </form>
         </Box>
     )

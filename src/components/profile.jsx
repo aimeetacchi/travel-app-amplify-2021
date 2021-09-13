@@ -8,7 +8,6 @@ import {
 
 const Profile = () => {
     const profileState = useSelector((state) => state.profile.data);
-    console.log(profileState);
 
     return (
         <div>

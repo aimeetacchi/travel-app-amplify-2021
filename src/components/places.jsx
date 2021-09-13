@@ -23,7 +23,7 @@ const useStyles = makeStyles({
       width: '100%',
   },
   container: {
-    width: '90%',
+    width: '100%',
     margin: '20px auto',
     // display: 'flex',
     // flexDirection: 'column',
@@ -112,10 +112,10 @@ const Places = () => {
       <>
         <Search search={search} setSearch={setSearch} />
         <Box className={classes.container}>
-          <Grid container>
+          <Grid container spacing={4}>
             { placesState.length > 0 ?
                 searchPlace(placesState).map((place, index) => (
-                  <Grid item xs={12} lg={6}>
+                  <Grid key={index} item xs={12} md={6}>
                     <Card key={place.id ? place.id : index} className={classes.place}>
                       <div onClick={() => deletePlace(place.id)} className={classes.delete}><DeleteForeverIcon/></div>
                       <CardContent>

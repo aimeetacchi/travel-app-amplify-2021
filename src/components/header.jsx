@@ -1,21 +1,48 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React, { useState } from 'react'
+import { Link, useHistory } from "react-router-dom";
+import { Auth } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
     Typography,
+    Container,
     Box,
     List,
+    Grid,
     ListItem,
+    AppBar,
+    Drawer,
+    IconButton,
+    Button,
 } from '@material-ui/core/';
 
+import LocalAirportIcon from '@material-ui/icons/LocalAirport';
+import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
+import PlaceIcon from '@material-ui/icons/Place';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+
+
 const useStyles = makeStyles({
+    verticallyAlign: {
+        display: 'flex',
+        gap: 5,
+        alignItems: 'center',
+    },
+    drawer: {
+        '& .MuiDrawer-paper': {
+            backgroundColor: '#22577A',
+        }
+    },
+    menuContainer: {
+        textAlign: 'right',
+    },
     navbar: {
-        backgroundColor: 'rebeccaPurple',
+        backgroundColor: '#22577A',
         // marginTop: 20,
         marginBottom: 20,
-        display: 'flex',
-        justifyContent: 'center',
+        width: 500,
         color:'white',
         '& a': {
             color:'white',
@@ -28,21 +55,79 @@ const useStyles = makeStyles({
     navitem: {
         width: 'auto',
     },
+    button: {
+        margin: '0 auto',
+        maxWidth: 250,
+    }
 })
 
 const Header = () => {
     const classes = useStyles();
+    const [navDrawerState, setNavDrawState] = useState({right: false});
+
+    async function signOut() {
+        await Auth.signOut();
+        window.location.reload();
+    }
+
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+          return;
+        }
+    
+        setNavDrawState({ ...navDrawerState, [anchor]: open });
+      };
+
     return (
         <Box>
-            <List className={classes.navbar} component="nav">
-                <ListItem className={classes.navitem} button><Link to="/">Home</Link></ListItem>
-                <ListItem className={classes.navitem} button><Link to="/places">Places</Link></ListItem>
-                <ListItem className={classes.navitem} button><Link to="/profile">Profile</Link></ListItem>
-            </List>
-            <Typography variant="h2" component="h1" align="center">Travel App</Typography>
-            <Typography variant="body1" align="center">Keep a collection of all the places you have travelled.</Typography>
+            <AppBar position="sticky">
+                <Container maxWidth="lg">
+                    <Grid container alignItems="center">
+                        <Grid item xs={6}>
+                            <Box className={classes.verticallyAlign}>
+                                <LocalAirportIcon/>
+                                <Typography variant="h5" component="h1"> Travel Logger</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6} className={classes.menuContainer}>
+                            <IconButton  onClick={toggleDrawer('right', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                                <MenuIcon />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </AppBar>
+
+            <Drawer
+                anchor={'right'}
+                open={navDrawerState['right']}
+                className={classes.drawer}
+                onClose={toggleDrawer('right', false)}
+            >
+                    <List className={classes.navbar} component="nav">
+                        <ListItem className={classes.navitem} button>
+                            <Link className={classes.verticallyAlign} onClick={() => setNavDrawState({right: false})} to="/">
+                                <HomeIcon/>
+                                <Typography variant="h6">Home</Typography>
+                            </Link>
+                        </ListItem>
+                        <ListItem className={classes.navitem} button>
+                            <Link className={classes.verticallyAlign} onClick={() => setNavDrawState({right: false})} to="/places">
+                                <PlaceIcon/>
+                                <Typography variant="h6">Places</Typography>
+                            </Link>
+                        </ListItem>
+                        <ListItem className={classes.navitem} button>
+                            <Link className={classes.verticallyAlign} onClick={() => setNavDrawState({right: false})} to="/profile">
+                                <AccountBoxIcon/>
+                                <Typography variant="h6">Profile</Typography>
+                            </Link>
+                        </ListItem>
+                    </List>
+                    <Button className={classes.button} variant="contained" color="primary" onClick={(e) => signOut(e)}>Sign Out</Button>
+            </Drawer>
         </Box>
     )
 }
 
-export default Header
+export default withAuthenticator(Header);
