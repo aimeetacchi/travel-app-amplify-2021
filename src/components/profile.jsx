@@ -8,20 +8,13 @@ import {
 
 const Profile = () => {
     const profileState = useSelector((state) => state.profile.data);
-
+    const profile = profileState[0];
     return (
-        <div>
-            {
-                profileState.map(profile => (
-                    <Box>
-                        <Typography variant="h3">Name: {profile.name}</Typography>
-                        <Typography variant="body2">Location: {profile.location}</Typography> 
-                        <Typography variant="body2">Bio: {profile.bio}</Typography> 
-                    </Box>
-                ))
-            }
-           
-        </div>
+        <Box>
+            <Typography variant="h3">Name: {profile.name}</Typography>
+            <Typography variant="body2">Location: {profile.location}</Typography> 
+            <Typography variant="body2">Bio: {profile.bio}</Typography> 
+        </Box>
     )
 }
 

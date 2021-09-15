@@ -53,6 +53,7 @@ const Places = () => {
     //Getting the places from the store ---- 
     const placesState = useSelector((state) => state.allPlaces.data);
     const newPlace = useSelector((state) => state.allPlaces.newPlace)
+   
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const [searchParam] = useState(["city", "country"]);
@@ -69,7 +70,6 @@ const Places = () => {
           console.log('error fetching places')
         }
       }
-
 
       function searchPlace(items) {
         return items.filter((item) => {

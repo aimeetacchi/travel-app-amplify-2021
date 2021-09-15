@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Storage, API, graphqlOperation } from 'aws-amplify'
-import { createPlaces } from '../graphql/mutations'
-import { addNewPlace, failedAddPlace, addPlaceComplete } from '../actions/places'
+import { Storage } from 'aws-amplify'
+
+import { addNewPlace, addPlaceComplete } from '../actions/places'
 import { useDispatch } from 'react-redux'
+
 import awsExports from '../aws-exports'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -82,47 +83,6 @@ const AddPlace = () => {
     function setInput(key, value) {
         setFormState({ ...formState, [key]: value })
     }
-
-    // Calling Add Place API function
-    const callAPIcreatePlaces =  async(place) => {
-            try {             
-               
-                 // === Uses the Amplify API category to call the AppSync GraphQL API with the createPlaces mutation. A difference between the listPlaces query and the createPlaces mutation is that createPlaces accepts an argument containing the variables needed for the mutation.
-                // Add place to database by calling API
-                const placeData = await API.graphql(graphqlOperation(createPlaces, {input: place}))
-
-                // RUN ADD ACTION === PASSING THE RETURNED DATA ADDED TO API
-                dispatch(addNewPlace(placeData));
-                // RUN COMPLETE ACTION
-                dispatch(addPlaceComplete());
-
-                setPlacesState({
-                    country: '',
-                    city: '',
-                    description: '',
-                    favourite: false,
-                    file: null
-                });
-
-                setFormState({
-                    country: '',
-                    city: '',
-                    description: '',
-                    favourite: false,
-                    file: null
-                })
-
-                setImageState({
-                    file: null
-                })
-
-
-            } catch (err) {
-                console.log('error creating place:', err)
-                // RUN FAIL ACTION ----
-                dispatch(failedAddPlace(err));
-            }
-    }
     
     // ADD Place Function ====
     const addPlace = async (e) => {
@@ -156,6 +116,14 @@ const AddPlace = () => {
                 console.log('Error uploading file:', error)
             }
     }
+
+     // Calling Add Place API function
+     const callAPIcreatePlaces =  (place) => {
+        // RUN ADD ACTION === PASSING THE RETURNED DATA ADDED TO API
+        dispatch(addNewPlace(place));
+        // RUN COMPLETE ACTION
+        dispatch(addPlaceComplete());       
+     }
     
     useEffect(() => {
         if(!firstTimeRender.current) {

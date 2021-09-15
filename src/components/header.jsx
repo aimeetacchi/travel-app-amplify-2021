@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Auth } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { makeStyles } from '@material-ui/core/styles';

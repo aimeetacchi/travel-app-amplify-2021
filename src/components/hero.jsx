@@ -19,11 +19,9 @@ const Hero = () => {
   
     return (
         <Box p={4} className={classes.root}>
-
             <Container maxWidth="md">
                 <Typography variant="body1" align="center">Keep a collection of all the places you have travelled.</Typography>
-            </Container>
-            
+            </Container>  
         </Box>
     )
 }
