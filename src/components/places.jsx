@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Search from './search'
 
 import { getPlaces, deleteSelectedPlace} from '../actions/places'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -48,12 +48,20 @@ const useStyles = makeStyles({
 },
 })
 
-const Places = ({ places: { data, loading, completeDeletedPlace }, getPlaces, deleteSelectedPlace}) => {
+// const Places = ({ places: { data, loading, completeDeletedPlace }, getPlaces, deleteSelectedPlace}) => {
+const Places = () => {
     const classes = useStyles();
    
     const [search, setSearch] = useState('');
     const [searchParam] = useState(["city", "country"]);
 
+    const data = useSelector((state) => state.allPlaces.data);
+    const loading = useSelector((state) => state.allPlaces.loading);
+    const completeDeletedPlace = useSelector((state) => state.allPlaces.completeDeletedPlace);
+    const addComplete = useSelector((state) => state.allPlaces.addComplete)
+
+    const dispatch = useDispatch();
+    // places: { data, loading, completeDeletedPlace }, getPlaces, deleteSelectedPlace
 
       // SEARCH FUNCTION
       function searchPlace(items) {
@@ -78,7 +86,7 @@ const Places = ({ places: { data, loading, completeDeletedPlace }, getPlaces, de
         };
 
         // Dispatch action - getPlaces passing the places array
-        deleteSelectedPlace(deletedPlace)
+        dispatch(deleteSelectedPlace(deletedPlace))
         
       }
 
@@ -94,7 +102,7 @@ const Places = ({ places: { data, loading, completeDeletedPlace }, getPlaces, de
 
     useEffect(() => {
       // if(!_.isEmpty(data) && !_.isEqual(prevData, data)) {
-        getPlaces()
+        dispatch(getPlaces())
       // }
       // eslint-disable-next-line
     }, [completeDeletedPlace])
@@ -147,8 +155,9 @@ Places.propTypes = {
   places: PropTypes.object,
 }
 
-const mapStateToProps = state => ({
-  places: state.allPlaces
-})
+// const mapStateToProps = state => ({
+//   places: state.allPlaces
+// })
 
-export default connect(mapStateToProps, { getPlaces, deleteSelectedPlace })(Places)
+export default Places
+// export default connect(mapStateToProps, { getPlaces, deleteSelectedPlace })(Places)

@@ -23,10 +23,8 @@ export const getPlaces = () => async dispatch => {
         dispatch({
             type: Types.FAILED_GET_PLACES,
             payload: err.response.data
-        })
-      
-    }
-   
+        }) 
+    }  
 }
 
 export const getPlacesComplete = () => {
@@ -46,7 +44,7 @@ export const addNewPlace = (place) => async dispatch => {
         console.log('Place Data', placeData.data.createPlaces)
        dispatch({
             type: Types.ADD_PLACE,
-            payload: placeData?.data?.createPlaces
+            payload: placeData.data.createPlaces
        });
 
         dispatch(addPlaceComplete());
