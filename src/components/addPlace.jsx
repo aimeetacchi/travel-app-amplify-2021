@@ -20,11 +20,16 @@ const useStyles = makeStyles({
         width: '100%',
     },
     container: {
+        backgroundColor: '#38a3a5',
+        position: 'relative',
         padding: 0,
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        padding: '20px 40px',
+        marginTop: -40,
+        
     },
     formField: {
         width: '100%',

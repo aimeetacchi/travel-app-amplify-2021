@@ -58,7 +58,6 @@ const Places = () => {
     const data = useSelector((state) => state.allPlaces.data);
     const loading = useSelector((state) => state.allPlaces.loading);
     const completeDeletedPlace = useSelector((state) => state.allPlaces.completeDeletedPlace);
-    const addComplete = useSelector((state) => state.allPlaces.addComplete)
 
     const dispatch = useDispatch();
     // places: { data, loading, completeDeletedPlace }, getPlaces, deleteSelectedPlace
@@ -107,8 +106,8 @@ const Places = () => {
       // eslint-disable-next-line
     }, [completeDeletedPlace])
 
-    if(loading || data === null) {
-      return <span>loading...</span>
+    if(loading) {
+      return <span>loading data...</span>
     }
 
     return (

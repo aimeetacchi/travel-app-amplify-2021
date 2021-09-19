@@ -12,7 +12,7 @@ const placesPage = () => {
     return (
         <Grid container>
             <Grid item xs={12}>
-                <Container maxWidth="md">
+                <Container maxWidth="lg">
                     <AddPlace />
                 </Container>
             </Grid>

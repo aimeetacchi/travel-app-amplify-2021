@@ -10,7 +10,25 @@ import {
 
 const useStyles = makeStyles({
    root: {
-       border: '1px solid red',
+       height: '40vh',
+   },
+   heroContainer: {
+    position: 'relative',
+    height: '100%',
+    padding: 0,
+   },
+   hero: {
+       width: '100%',
+       height: '100%',
+       objectFit: 'cover',
+
+   },
+   heroContent: {
+       position: 'absolute',
+       top: '50%',
+       zIndex: 1,
+       left: '50%',
+       transform: 'translate(-50%, -50%)',
    }
 })
 
@@ -18,11 +36,16 @@ const Hero = () => {
     const classes = useStyles();
   
     return (
-        <Box p={4} className={classes.root}>
+    <Box className={classes.root}>
+        <Box className={classes.heroContainer}>
+            <img className={classes.hero} src='./assets/images/hero001.jpg' alt="hero" />
             <Container maxWidth="md">
-                <Typography variant="body1" align="center">Keep a collection of all the places you have travelled.</Typography>
-            </Container>  
+                <Box className={classes.heroContent}>
+                    <Typography variant="h3" component="h1" align="center">Keep a collection of all the places you have travelled.</Typography>
+                </Box>
+            </Container> 
         </Box>
+    </Box>
     )
 }
 
