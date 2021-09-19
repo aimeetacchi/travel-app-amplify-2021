@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import Places from './places'
-import Profile from './profile'
+import PlacesReducer from './places'
+import ProfileReducer from './profile'
 
 const reducers = combineReducers({
-    allPlaces: Places,
-    profile: Profile,
+    allPlaces: PlacesReducer,
+    profile: ProfileReducer,
 })
 
 export default reducers;

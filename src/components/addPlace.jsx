@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Storage } from 'aws-amplify'
 
-import { addNewPlace, addPlaceComplete } from '../actions/places'
+import { addNewPlace } from '../actions/places'
 import { useDispatch } from 'react-redux'
 
 import awsExports from '../aws-exports'
@@ -69,7 +69,7 @@ const AddPlace = () => {
         file: null
     })
 
-    const [places, setPlacesState] = useState({
+    const [place, setPlaceState] = useState({
         country: '',
         city: '',
         description: '',
@@ -86,7 +86,6 @@ const AddPlace = () => {
     
     // ADD Place Function ====
     const addPlace = async (e) => {
-       
         e.preventDefault();
         console.log('this is running! no errors')
         // Reset the form state ====
@@ -103,7 +102,7 @@ const AddPlace = () => {
                             key: 'public/' + result.key
                     }
     
-                   setPlacesState({
+                   setPlaceState({
                        country: formState.country,
                        city: formState.city,
                        description: formState.description,
@@ -120,18 +119,18 @@ const AddPlace = () => {
      // Calling Add Place API function
      const callAPIcreatePlaces =  (place) => {
         // RUN ADD ACTION === PASSING THE RETURNED DATA ADDED TO API
-        dispatch(addNewPlace(place));
-        // RUN COMPLETE ACTION
-        dispatch(addPlaceComplete());       
+         dispatch(addNewPlace(place));
+         // Empty Form State ---
      }
     
     useEffect(() => {
+
         if(!firstTimeRender.current) {
-            console.log('calling...')
-            callAPIcreatePlaces(places);
+            console.log("places data has changes to running use effect")
+            callAPIcreatePlaces(place);
         }
     // eslint-disable-next-line
-    }, [places])
+    }, [place])
 
     useEffect(() => { 
         firstTimeRender.current = false 

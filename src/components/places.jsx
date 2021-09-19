@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+// import _ from 'lodash'
 import Search from './search'
-import { API, graphqlOperation } from 'aws-amplify'
-import { listPlaces } from '../graphql/queries'
-import { deletePlaces } from '../graphql/mutations'
-import { getPlaces, errPlaces, deleteSelectedPlace, deletePlaceComplete, failedDeletePlace} from '../actions/places'
-import { useDispatch, useSelector } from 'react-redux'
+
+import { getPlaces, deleteSelectedPlace} from '../actions/places'
+import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -48,29 +48,14 @@ const useStyles = makeStyles({
 },
 })
 
-const Places = () => {
+const Places = ({ places: { data, loading, completeDeletedPlace }, getPlaces, deleteSelectedPlace}) => {
     const classes = useStyles();
-    //Getting the places from the store ---- 
-    const placesState = useSelector((state) => state.allPlaces.data);
-    const newPlace = useSelector((state) => state.allPlaces.newPlace)
    
-    const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const [searchParam] = useState(["city", "country"]);
 
-    // === Uses the Amplify API category to call the AppSync GraphQL API with the listPlaces query. Once the data is returned, the items array is passed in to the setPlaces function to update the local state.
-    async function fetchPlaces() {
-        try {
-          const placesData = await API.graphql(graphqlOperation(listPlaces))
-          const places = placesData.data.listPlaces.items
-          // Dispatch action - getPlaces passing the places array
-          dispatch(getPlaces(places))
-        } catch (err) { 
-          dispatch(errPlaces(err))
-          console.log('error fetching places')
-        }
-      }
 
+      // SEARCH FUNCTION
       function searchPlace(items) {
         return items.filter((item) => {
             return searchParam.some((newItem) => {
@@ -84,39 +69,51 @@ const Places = () => {
         });
       }
       
-      const deletePlace = async (place) => {
+      // DELETE PLACE
+      const deletePlace = (place) => {
         console.log('deleting....', place)
 
-        const placeDetails = {
+        const deletedPlace = {
           id: place,
         };
 
-        try {
-          const placesData = await API.graphql(graphqlOperation(deletePlaces, {input: placeDetails}))
-          const deletedPlace = placesData.data.deletePlaces.items
-          // Dispatch action - getPlaces passing the places array
-          dispatch(deleteSelectedPlace(deletedPlace))
-          dispatch(deletePlaceComplete());
-        } catch (err) { 
-          dispatch(failedDeletePlace(err))
-          console.log('error deleting places')
-        }
+        // Dispatch action - getPlaces passing the places array
+        deleteSelectedPlace(deletedPlace)
+        
       }
 
+      // const usePrevious = (value) => {
+      //   const ref = useRef();
+      //   useEffect(() => {
+      //     ref.current = value
+      //   }, [value]);
+      //   return ref.current;
+      // }
+    
+      // const prevData = usePrevious({data});
+
     useEffect(() => {
-      fetchPlaces()
+      // if(!_.isEmpty(data) && !_.isEqual(prevData, data)) {
+        getPlaces()
+      // }
       // eslint-disable-next-line
-    }, [newPlace, placesState])
+    }, [completeDeletedPlace])
+
+    if(loading || data === null) {
+      return <span>loading...</span>
+    }
 
     return (
       <>
-        <Search search={search} setSearch={setSearch} />
+        { data.length > 0 &&
+          <Search search={search} setSearch={setSearch} />
+        }
         <Box className={classes.container}>
           <Grid container spacing={4}>
-            { placesState.length > 0 ?
-                searchPlace(placesState).map((place, index) => (
+            { data.length > 0 ?
+                searchPlace(data).map((place, index) => (
                   <Grid key={index} item xs={12} md={6}>
-                    <Card key={place.id ? place.id : index} className={classes.place}>
+                    <Card key={place.id} className={classes.place}>
                       <div onClick={() => deletePlace(place.id)} className={classes.delete}><DeleteForeverIcon/></div>
                       <CardContent>
                         {place.file.key !== 'public/undefined' && <img src={`https://${place.file.bucket}.s3.amazonaws.com/${place.file.key}`} className={classes.placeImg} alt='place'/>}
@@ -134,7 +131,11 @@ const Places = () => {
                       </CardContent>
                     </Card>
                   </Grid>
-                )) : 'You have not added any places yet.'
+                )) : ( 
+                  <Grid item xs={12}>
+                    <Typography variant="body1">You have not added any places yet.</Typography>
+                  </Grid>
+                )
             }
           </Grid>
         </Box>
@@ -142,4 +143,12 @@ const Places = () => {
     )
 }
 
-export default Places
+Places.propTypes = {
+  places: PropTypes.object,
+}
+
+const mapStateToProps = state => ({
+  places: state.allPlaces
+})
+
+export default connect(mapStateToProps, { getPlaces, deleteSelectedPlace })(Places)
