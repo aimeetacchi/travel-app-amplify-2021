@@ -10,7 +10,8 @@ type Places @model
     city: String!
     country: String!
     description: String
-    dateVisited: AWSDate
+    dateVisitedFrom: AWSDate
+    dateVisitedTo: AWSDate
     favourite: Boolean
     visited: Boolean
     

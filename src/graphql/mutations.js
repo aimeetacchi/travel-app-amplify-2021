@@ -11,7 +11,8 @@ export const createPlaces = /* GraphQL */ `
       city
       country
       description
-      dateVisited
+      dateVisitedFrom
+      dateVisitedTo
       favourite
       visited
       file {
@@ -35,7 +36,8 @@ export const updatePlaces = /* GraphQL */ `
       city
       country
       description
-      dateVisited
+      dateVisitedFrom
+      dateVisitedTo
       favourite
       visited
       file {
@@ -59,7 +61,8 @@ export const deletePlaces = /* GraphQL */ `
       city
       country
       description
-      dateVisited
+      dateVisitedFrom
+      dateVisitedTo
       favourite
       visited
       file {

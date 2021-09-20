@@ -8,9 +8,12 @@ import {
 } from '@material-ui/core/';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) =>({
    root: {
-       height: '40vh',
+       height: '70vh',
+       [theme.breakpoints.up('md')]: {
+           height: '60vh',
+        },
    },
    heroContainer: {
     position: 'relative',
@@ -24,13 +27,17 @@ const useStyles = makeStyles({
 
    },
    heroContent: {
-       position: 'absolute',
-       top: '50%',
-       zIndex: 1,
-       left: '50%',
-       transform: 'translate(-50%, -50%)',
+        position: 'absolute',
+        top: '50%',
+        zIndex: 1,
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '90%',
+        [theme.breakpoints.up('md')]: {
+           width: 500,
+        },
    }
-})
+}))
 
 const Hero = () => {
     const classes = useStyles();

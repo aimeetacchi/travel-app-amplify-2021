@@ -131,6 +131,10 @@ const Places = () => {
                             <Typography variant="body1" className={classes.placeCity}>{place.city}</Typography>
 
                             {place.description && <Typography variant="body1" className={classes.placeDescription}>{place.description}</Typography>}
+                            
+                            <Typography variant="body1" className={classes.placeDescription}>Date From:{place.dateVisitedFrom}</Typography>
+                            <Typography variant="body1" className={classes.placeDescription}>Date To:{place.dateVisitedTo}</Typography>
+                             
                           </Grid>
                           <Grid item xs={2}> <Typography variant="body1">{place.favourite && (<FavoriteIcon/>)}</Typography></Grid>
                         </Grid>

@@ -8,7 +8,8 @@ export const onCreatePlaces = /* GraphQL */ `
       city
       country
       description
-      dateVisited
+      dateVisitedFrom
+      dateVisitedTo
       favourite
       visited
       file {
@@ -29,7 +30,8 @@ export const onUpdatePlaces = /* GraphQL */ `
       city
       country
       description
-      dateVisited
+      dateVisitedFrom
+      dateVisitedTo
       favourite
       visited
       file {
@@ -50,7 +52,8 @@ export const onDeletePlaces = /* GraphQL */ `
       city
       country
       description
-      dateVisited
+      dateVisitedFrom
+      dateVisitedTo
       favourite
       visited
       file {

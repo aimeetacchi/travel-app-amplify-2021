@@ -8,7 +8,8 @@ export const getPlaces = /* GraphQL */ `
       city
       country
       description
-      dateVisited
+      dateVisitedFrom
+      dateVisitedTo
       favourite
       visited
       file {
@@ -34,7 +35,8 @@ export const listPlaces = /* GraphQL */ `
         city
         country
         description
-        dateVisited
+        dateVisitedFrom
+        dateVisitedTo
         favourite
         visited
         file {

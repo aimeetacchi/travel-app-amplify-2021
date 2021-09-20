@@ -22,7 +22,6 @@ const useStyles = makeStyles({
     container: {
         backgroundColor: '#38a3a5',
         position: 'relative',
-        padding: 0,
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
@@ -61,13 +60,15 @@ const useStyles = makeStyles({
 const AddPlace = () => {
     const classes = useStyles();
     const firstTimeRender = useRef(true);
+    
     const [formState, setFormState] = useState({
         country: '',
         city: '',
         description: '',
         favourite: false,
+        dateVisitedFrom: null,
+        dateVisitedTo: null,
         file: null
-        
     })
 
     const [imageState, setImageState] = useState({
@@ -79,6 +80,8 @@ const AddPlace = () => {
         city: '',
         description: '',
         favourite: false,
+        dateVisitedFrom: null,
+        dateVisitedTo: null,
         file: {},
     });
 
@@ -92,8 +95,9 @@ const AddPlace = () => {
     // ADD Place Function ====
     const addPlace = async (e) => {
         e.preventDefault();
+        e.target.reset();
         console.log('this is running! no errors')
-        // Reset the form state ====
+       
         
             try {
                 const result = await Storage.put(imageState.name, imageState, {
@@ -107,14 +111,18 @@ const AddPlace = () => {
                             key: 'public/' + result.key
                     }
     
-                   setPlaceState({
-                       country: formState.country,
-                       city: formState.city,
-                       description: formState.description,
-                       favourite: formState.favourite,
-                       file: image
-                   });
+                    setPlaceState({
+                        country: formState.country,
+                        city: formState.city,
+                        description: formState.description,
+                        favourite: formState.favourite,
+                        dateVisitedFrom: formState.dateVisitedFrom,
+                        dateVisitedTo: formState.dateVisitedTo,
+                        file: image
+                    });
+                
                 }
+               
     
             } catch (error) {
                 console.log('Error uploading file:', error)
@@ -150,7 +158,8 @@ const AddPlace = () => {
                             className={classes.formField}
                             label="Add Country"
                             variant="outlined"
-                            color="primary"
+                            color="secondary"
+                            required
                             onChange={e => setInput('country', e.target.value)}
                             value={formState.name}
                             placeholder="Add Country"
@@ -162,7 +171,8 @@ const AddPlace = () => {
                             className={classes.formField}
                             label="Add City"
                             variant="outlined"
-                            color="primary"
+                            color="secondary"
+                            required
                             onChange={e => setInput('city', e.target.value)}
                             value={formState.name}
                             placeholder="Add City"
@@ -174,7 +184,7 @@ const AddPlace = () => {
                             className={classes.formField}
                             label="Add Description"
                             variant="outlined"
-                            color="primary"
+                            color="secondary"
                             onChange={e => setInput('description', e.target.value)}
                             value={formState.description}
                             placeholder="Add a short description about the place"
@@ -183,10 +193,37 @@ const AddPlace = () => {
                             // error={descriptionErr}
                         />
                     </Grid>
+                     
+                    <Grid item xs={12} md={6}>
+                        <Box>
+                            <label for="start">Start date:</label>
+                            <input
+                            value={formState.dateVisitedFrom}
+                            onChange={e => setInput('dateVisitedFrom', e.target.value)}
+                            className={classes.formField}
+                            type="date"
+                            id="start"
+                            name="trip-start"
+                            min="1999-01-01" max="2021-12-31"/>
+                        </Box>
+
+                        <Box>
+                            <label for="start">End date:</label>
+                            <input
+                            value={formState.dateVisitedTo}
+                            onChange={e => setInput('dateVisitedTo', e.target.value)}
+                            className={classes.formField}
+                            type="date"
+                            id="end"
+                            name="trip-end"
+                            min="1999-01-01" max="2021-12-31"/>
+                        </Box>
+                    </Grid>
+
                     <Grid item xs={12} md={6}>         
                         <TextField
                             type="file"
-                            color="primary"
+                            color="secondary"
                             onChange={e => setImageState(e.target.files[0])}
                         />
                     </Grid>
@@ -198,7 +235,7 @@ const AddPlace = () => {
                                     checked={formState.favourite}
                                     onChange={e => setInput('favourite', e.target.checked)}
                                     name="favourite"
-                                    color="primary"
+                                    color="secondary"
                                 />
                             }
                         />
