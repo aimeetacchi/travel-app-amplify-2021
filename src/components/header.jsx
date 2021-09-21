@@ -112,13 +112,13 @@ const Header = () => {
                             </Link>
                         </ListItem>
                         <ListItem className={classes.navitem} button>
-                            <Link className={classes.verticallyAlign} onClick={() => setNavDrawState({right: false})} to="/places">
+                            <Link className={classes.verticallyAlign} onClick={() => setNavDrawState({right: false})} to="/places/">
                                 <PlaceIcon/>
                                 <Typography variant="h6">Places</Typography>
                             </Link>
                         </ListItem>
                         <ListItem className={classes.navitem} button>
-                            <Link className={classes.verticallyAlign} onClick={() => setNavDrawState({right: false})} to="/profile">
+                            <Link className={classes.verticallyAlign} onClick={() => setNavDrawState({right: false})} to="/profile/">
                                 <AccountBoxIcon/>
                                 <Typography variant="h6">Profile</Typography>
                             </Link>

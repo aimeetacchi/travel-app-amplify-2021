@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 // import _ from 'lodash'
 import Search from './search'
+import PlacesItem from './placesItem'
+import Pagination from './pagination'
 
 import { getPlaces, deleteSelectedPlace} from '../actions/places'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,14 +11,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import {
   Box,
-  Card,
-  CardContent,
   Typography,
   Grid,
 } from '@material-ui/core/';
 
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles({
   root: {
@@ -29,23 +27,7 @@ const useStyles = makeStyles({
     // flexDirection: 'column',
     // justifyContent: 'center'
   },
-  place: {  
-    marginBottom: 15
-  },
-  placeCountry: {
-    fontSize: 25,
-    fontWeight: 'bold'
-  },
-  placeCity: { 
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  placeDescription: { marginBottom: 0 },
-  placeImg: {
-    width: '100%',
-    objectFit: 'cover',
-    height: 300,
-},
+  
 })
 
 // const Places = ({ places: { data, loading, completeDeletedPlace }, getPlaces, deleteSelectedPlace}) => {
@@ -54,6 +36,10 @@ const Places = () => {
    
     const [search, setSearch] = useState('');
     const [searchParam] = useState(["city", "country"]);
+
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [placesPerPage] = useState(4);
 
     const data = useSelector((state) => state.allPlaces.data);
     const loading = useSelector((state) => state.allPlaces.loading);
@@ -89,6 +75,10 @@ const Places = () => {
         
       }
 
+      // Change Page
+      const paginate = (pageNumber) => setCurrentPage(pageNumber)
+      
+
       // const usePrevious = (value) => {
       //   const ref = useRef();
       //   useEffect(() => {
@@ -110,6 +100,11 @@ const Places = () => {
       return <span>loading data...</span>
     }
 
+    // Get current place
+    const indexOfLastPlace = currentPage * placesPerPage;
+    const indexOfFirstPlace = indexOfLastPlace - placesPerPage;
+    const currentPlaces = data.slice(indexOfFirstPlace, indexOfLastPlace)
+
     return (
       <>
         { data.length > 0 &&
@@ -118,30 +113,8 @@ const Places = () => {
         <Box className={classes.container}>
           <Grid container spacing={4}>
             { data.length > 0 ?
-                searchPlace(data).map((place, index) => (
-                  <Grid key={index} item xs={12} md={6}>
-                    <Card key={place.id} className={classes.place}>
-                      <div onClick={() => deletePlace(place.id)} className={classes.delete}><DeleteForeverIcon/></div>
-                      <CardContent>
-                        {place.file.key !== 'public/undefined' && <img src={`https://${place.file.bucket}.s3.amazonaws.com/${place.file.key}`} className={classes.placeImg} alt='place'/>}
-                        <Grid container spacing={2}>
-                          <Grid item xs={10}>
-                            <Typography variant="h2" className={classes.placeCountry}>{place.country}</Typography>
-
-                            <Typography variant="body1" className={classes.placeCity}>{place.city}</Typography>
-
-                            {place.description && <Typography variant="body1" className={classes.placeDescription}>{place.description}</Typography>}
-                            
-                            <Typography variant="body1" className={classes.placeDescription}>Date From:{place.dateVisitedFrom}</Typography>
-                            <Typography variant="body1" className={classes.placeDescription}>Date To:{place.dateVisitedTo}</Typography>
-                             
-                          </Grid>
-                          <Grid item xs={2}> <Typography variant="body1">{place.favourite && (<FavoriteIcon/>)}</Typography></Grid>
-                        </Grid>
-                      
-                      </CardContent>
-                    </Card>
-                  </Grid>
+                searchPlace(currentPlaces).map((place, index) => (
+                 <PlacesItem key={index} place={place} deletePlace={deletePlace}/>
                 )) : ( 
                   <Grid item xs={12}>
                     <Typography variant="body1">You have not added any places yet.</Typography>
@@ -149,6 +122,7 @@ const Places = () => {
                 )
             }
           </Grid>
+          { data.length > 0 && (<Pagination placesPerPage={placesPerPage} totalPlaces={data.length} paginate={paginate}/>)}
         </Box>
       </>
     )

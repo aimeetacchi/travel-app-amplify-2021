@@ -50,8 +50,8 @@ const App = () => {
           <Container maxWidth="lg">
             <Switch>
               <Route path="/" exact component={Home} />
-              <Route path="/profile" component={Profile} />
-              <Route path="/places" component={Places} />
+              <Route path="/profile/" component={Profile} />
+              <Route path="/places/" component={Places} />
             </Switch>
           </Container>
         </Box>

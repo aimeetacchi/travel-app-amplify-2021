@@ -96,7 +96,7 @@ const AddPlace = () => {
     const addPlace = async (e) => {
         e.preventDefault();
         e.target.reset();
-        console.log('this is running! no errors')
+        console.log('this is running! addplace')
        
         
             try {
