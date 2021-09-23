@@ -7,7 +7,8 @@ const initialState = {
     getComplete: false,
     addComplete: false,
     loading: false,
-    completeDeletedPlace: false
+    completeDeletedPlace: false,
+    nextnexttoken: ''
 }
 
 const Places = (state = initialState, {type, payload}) => {
@@ -24,6 +25,12 @@ const Places = (state = initialState, {type, payload}) => {
                 data: payload,
                 loading: false,
                 completeDeletedPlace: false
+            }
+        case Types.SET_NEXTNEXT_TOKEN:
+            console.log('setting nextnexttoken')
+            return {
+                ...state,
+                nextnexttoken: payload,
             }
         case Types.COMPLETE_GET_PLACES:
             console.log('running complete get places..');

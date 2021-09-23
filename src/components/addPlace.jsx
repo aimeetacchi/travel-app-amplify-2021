@@ -196,9 +196,8 @@ const AddPlace = () => {
                      
                     <Grid item xs={12} md={6}>
                         <Box>
-                            <label for="start">Start date:</label>
+                            <label htmlFor="start">Start date:</label>
                             <input
-                            value={formState.dateVisitedFrom}
                             onChange={e => setInput('dateVisitedFrom', e.target.value)}
                             className={classes.formField}
                             type="date"
@@ -208,9 +207,8 @@ const AddPlace = () => {
                         </Box>
 
                         <Box>
-                            <label for="start">End date:</label>
+                            <label htmlFor="start">End date:</label>
                             <input
-                            value={formState.dateVisitedTo}
                             onChange={e => setInput('dateVisitedTo', e.target.value)}
                             className={classes.formField}
                             type="date"

@@ -1,30 +1,21 @@
 // ACTIONS IS WHERE YOU CALL APIS AND DO STUFF
 import { API, graphqlOperation } from 'aws-amplify'
-import { listPlaces } from '../graphql/queries'
+// import { listPlaces } from '../graphql/queries'
 import { createPlaces, deletePlaces } from '../graphql/mutations'
 
 import Types from './types';
 
 // GET PLACES
-export const getPlaces = () => async dispatch => {
-    try {
-        dispatch(setLoading());  
-        // === Uses the Amplify API category to call the AppSync GraphQL API with the listPlaces query. Once the data is returned, the items array is passed in to the setPlaces function to update the local state.
-        const placesData = await API.graphql(graphqlOperation(listPlaces))
-        const data = placesData.data.listPlaces.items
+export const getPlaces = (data) => async dispatch => {
+   
+        dispatch(setLoading());
+       
         dispatch({
             type: Types.GET_PLACES,
             payload: data
         })
-
-        dispatch(getPlacesComplete());
-    } catch (err) {
-        console.log('error fetching places')
-        dispatch({
-            type: Types.FAILED_GET_PLACES,
-            payload: err.response.data
-        }) 
-    }  
+     
+        dispatch(getPlacesComplete()); 
 }
 
 export const getPlacesComplete = () => {
