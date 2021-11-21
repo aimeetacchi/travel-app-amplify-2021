@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core/';
 
 import './App.css';
+import { AccessibilityWidget } from 'react-accessibility';
 import Header from './components/header';
 import Hero from './components/hero';
 
@@ -43,6 +44,7 @@ const App = () => {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
+      <AccessibilityWidget/>
       <Router>
         <Box className={classes.root}>
           <Header />

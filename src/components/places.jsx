@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-// import _ from 'lodash'
+import _ from 'lodash'
 
 import { API, graphqlOperation } from 'aws-amplify'
 import { listPlaces } from '../graphql/queries'
@@ -9,7 +9,7 @@ import Search from './search'
 import PlacesItem from './placesItem'
 // import Pagination from './pagination'
 
-import { getPlaces, deleteSelectedPlace} from '../actions/places'
+import { getPlaces, deleteSelectedPlace, sortByAsc, sortByDesc} from '../actions/places'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -17,7 +17,7 @@ import {
   Box,
   Typography,
   Grid,
-  Button,
+  // Button,
 } from '@material-ui/core/';
 
 
@@ -43,9 +43,9 @@ const Places = () => {
     const [searchParam] = useState(["city", "country"]);
 
 
-    const [nextToken, setNextToken] = useState(null)
-    const [nextNextToken, setNextNextToken] = useState()
-    const [previousTokens, setPreviousTokens] = useState([])
+    // const [nextToken, setNextToken] = useState(null)
+    // const [nextNextToken, setNextNextToken] = useState()
+    // const [previousTokens, setPreviousTokens] = useState([])
 
     // const [currentPage, setCurrentPage] = useState(1);
     // const [placesPerPage] = useState(6);
@@ -69,6 +69,25 @@ const Places = () => {
                 );
             });
         });
+      }
+
+      // SORT BY ASC
+      function sortByASC() {
+
+          console.log('sorting places by ascending order')
+          let sortedData = _.sortBy( data, 'city' );
+          console.log(sortedData);
+          // CALL DISPATCH TO UPDATE STATE
+          dispatch(sortByAsc(sortedData))
+      }
+
+      // SORT BY DESC
+      function sortByDESC() {
+        console.log('sorting places by descending order')
+        let sortedData = _.reverse(_.sortBy( data, 'city'));
+        console.log(sortedData);
+        // CALL DISPATCH TO UPDATE STATE
+        dispatch(sortByDesc(sortedData))
       }
       
       // DELETE PLACE
@@ -105,18 +124,19 @@ const Places = () => {
 
         try {
 
-            const variables = {
-              nextToken,
-              limit: 2,
-            }
+            // const variables = {
+            //   nextToken,
+            //   limit: 4,
+            // }
 
-            console.log(variables)
+            // console.log('variables', variables)
 
           // === Uses the Amplify API category to call the AppSync GraphQL API with the listPlaces query. Once the data is returned, the items array is passed in to the setPlaces function to update the local state.
-          const placesData = await API.graphql(graphqlOperation(listPlaces, variables))
+          // const placesData = await API.graphql(graphqlOperation(listPlaces, variables))
+          const placesData = await API.graphql(graphqlOperation(listPlaces))
           const data = placesData.data.listPlaces.items
 
-          setNextNextToken(placesData.data.listPlaces.nextToken)
+          // setNextNextToken(placesData.data.listPlaces.nextToken)
 
           dispatch(getPlaces(data))
         } catch(err) {
@@ -128,8 +148,34 @@ const Places = () => {
         }
       }
       fetch();
-      // eslint-disable-next-line
-    }, [nextToken, completeDeletedPlace])
+     
+    // }, [nextToken, completeDeletedPlace])
+     // eslint-disable-next-line
+  }, [completeDeletedPlace])
+    
+    useEffect(() => {
+      const fetchFlags = async() => {
+        try {
+          const requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+
+          const res = await fetch("https://countriesnow.space/api/v0.1/countries/info?returns=currency,flag,unicodeFlag,dialCode", requestOptions);
+         
+          const countryData = await res.json();
+          const countryDataFiltered = data.map((visitedPlace) => countryData.data.filter((country) => visitedPlace.country.toLowerCase() === country.name.toLowerCase()))
+          console.log(countryDataFiltered)
+
+        } catch (error) {
+          console.log('error', error)
+        }
+      }
+  if(data && data?.length > 0) {
+    fetchFlags();
+  }
+    
+    }, [data]);
 
     if(loading) {
       return <span>loading data...</span>
@@ -141,22 +187,22 @@ const Places = () => {
     // const currentPlaces = data.slice(indexOfFirstPlace, indexOfLastPlace)
 
 
-    const next = () => {
-      setPreviousTokens((prev) => [...prev, nextToken])
-      setNextToken(nextNextToken)
-      setNextNextToken(null)
-    }
+    // const next = () => {
+    //   setPreviousTokens((prev) => [...prev, nextToken])
+    //   setNextToken(nextNextToken)
+    //   setNextNextToken(null)
+    // }
 
-    const prev = () => {
-      setNextToken(previousTokens.pop())
-      setPreviousTokens([...previousTokens])
-      setNextNextToken(null)
-    }
+    // const prev = () => {
+    //   setNextToken(previousTokens.pop())
+    //   setPreviousTokens([...previousTokens])
+    //   setNextNextToken(null)
+    // }
 
     return (
       <>
         { data.length > 0 &&
-          <Search search={search} setSearch={setSearch} />
+          <Search search={search} setSearch={setSearch} sortByDESC={sortByDESC} sortByASC={sortByASC} />
         }
         <Box className={classes.container}>
           <Grid container spacing={4}>
@@ -171,10 +217,10 @@ const Places = () => {
             }
           </Grid>
           {/* { data.length > 0 && (<Pagination placesPerPage={placesPerPage} totalPlaces={data.length} paginate={paginate}/>)} */}
-          {previousTokens.length > 0 && <Button onClick={prev} variant="outline">Prev</Button>}
-          <Button onClick={next} variant="outline">Next</Button>
+
+          {/* {previousTokens.length > 0 && <Button onClick={prev} variant="outlined">Prev</Button>}
+          <Button onClick={next} variant="outlined">Next</Button> */}
          
-          
         </Box>
       </>
     )

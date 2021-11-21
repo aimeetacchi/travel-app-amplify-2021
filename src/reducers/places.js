@@ -8,7 +8,7 @@ const initialState = {
     addComplete: false,
     loading: false,
     completeDeletedPlace: false,
-    nextnexttoken: ''
+    // nextnexttoken: ''
 }
 
 const Places = (state = initialState, {type, payload}) => {
@@ -26,12 +26,22 @@ const Places = (state = initialState, {type, payload}) => {
                 loading: false,
                 completeDeletedPlace: false
             }
-        case Types.SET_NEXTNEXT_TOKEN:
-            console.log('setting nextnexttoken')
+        case Types.ASC_PLACES:
             return {
                 ...state,
-                nextnexttoken: payload,
+                data: payload,
             }
+        case Types.DESC_PLACES:
+            return {
+                ...state,
+                data: payload,
+            }
+        // case Types.SET_NEXTNEXT_TOKEN:
+        //     console.log('setting nextnexttoken')
+        //     return {
+        //         ...state,
+        //         nextnexttoken: payload,
+        //     }
         case Types.COMPLETE_GET_PLACES:
             console.log('running complete get places..');
             return {

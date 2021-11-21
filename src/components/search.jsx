@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
     Box,
     TextField,
+    Typography
 } from '@material-ui/core/';
 
 const useStyles = makeStyles({
@@ -32,20 +33,24 @@ const useStyles = makeStyles({
     }
 })
 
-const Search = ({search, setSearch}) => {
+const Search = ({search, setSearch, sortByASC, sortByDESC}) => {
     const classes = useStyles();
 
     return (
-        <Box>
-             <TextField
-                    className={classes.formField}
-                    label="Search Place"
-                    variant="outlined"
-                    color="primary"
-                    onChange={e => setSearch(e.target.value)}
-                    value={search}
-                    placeholder="Search Place..."
-                />
+        <Box className={classes.root}>
+            <Typography variant="body2">Filters:</Typography>
+            <TextField
+                className={classes.formField}
+                label="Search Place"
+                variant="outlined"
+                color="primary"
+                onChange={e => setSearch(e.target.value)}
+                value={search}
+                placeholder="Search Place..."
+            />
+            <Typography variant="body2">Sort By City:</Typography>
+            <button onClick={sortByASC}>asc</button>
+            <button onClick={sortByDESC}>desc</button>
         </Box>
     )
 }

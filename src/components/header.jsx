@@ -84,10 +84,12 @@ const Header = () => {
                 <Container maxWidth="lg">
                     <Grid container alignItems="center">
                         <Grid item xs={6}>
+                            <Link to="/">
                             <Box className={classes.verticallyAlign}>
                                 <LocalAirportIcon/>
                                 <Typography variant="h5" component="h1"> Travel Logger</Typography>
                             </Box>
+                            </Link>
                         </Grid>
                         <Grid item xs={6} className={classes.menuContainer}>
                             <IconButton  onClick={toggleDrawer('right', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">

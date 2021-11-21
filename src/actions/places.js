@@ -51,6 +51,22 @@ export const addNewPlace = (place) => async dispatch => {
     
 }
 
+// SORT PLACES BY ASC ORDER
+export const sortByAsc = (data) => async dispatch => {
+    dispatch({
+        type: Types.ASC_PLACES,
+        payload: data
+    })
+}
+
+// SORT PLACES BY DESC ORDER
+export const sortByDesc = (data) => async dispatch => {
+    dispatch({
+        type: Types.DESC_PLACES,
+        payload: data
+    })
+}
+
 
 
 // Set Loading to True..

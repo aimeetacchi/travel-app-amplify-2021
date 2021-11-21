@@ -65,12 +65,13 @@ const ProfilePage = () => {
     const dispatch = useDispatch();
 
        // Setting input of form fields
-    function setInput(key, value) {
+    const setInput = (key, value) => {
         setFormState({ ...formState, [key]: value })
     }
 
+    
     // GETTING PROFILE INFO FIRST RENDER
-    async function fetchProfileInfo() {
+     const fetchProfileInfo = async () => {
         try {
           const ProfileData = await API.graphql(graphqlOperation(listUsers))
          
@@ -114,17 +115,17 @@ const ProfilePage = () => {
         
     return (
         <>
-        <Box mt={2} align='center'>
+        <Box m={5} align='center'>
           {!profileState.length < 1 ? (<Profile/>) : <Typography variant="body2">You have not set up your profile yet. Fill out form below</Typography>}
         </Box>
         {profileState.length < 1 &&
-            <Box>
+            <Box m={5}>
               <form className={classes.container} onSubmit={createUserProfile}>
                 <TextField
                     className={classes.formField}
                     label="Add Name"
                     variant="outlined"
-                    color="secondary"
+                    color="primary"
                     onChange={e => setInput('name', e.target.value)}
                     value={formState.name}
                     placeholder="Add Name"
@@ -134,7 +135,7 @@ const ProfilePage = () => {
                     className={classes.formField}
                     label="Add Location"
                     variant="outlined"
-                    color="secondary"
+                    color="primary"
                     onChange={e => setInput('location', e.target.value)}
                     value={formState.location}
                     placeholder="Add Location"
@@ -145,7 +146,7 @@ const ProfilePage = () => {
                     className={classes.formField}
                     label="Add Bio"
                     variant="outlined"
-                    color="secondary"
+                    color="primary"
                     onChange={e => setInput('bio', e.target.value)}
                     value={formState.bio}
                     placeholder="Add a short Bio about yourself"
