@@ -7,8 +7,8 @@ import {
   Box,
 } from '@material-ui/core/';
 
-import './App.css';
-import { AccessibilityWidget } from 'react-accessibility';
+import './App.scss';
+// import { AccessibilityWidget } from 'react-accessibility';
 import Header from './components/header';
 import Hero from './components/hero';
 
@@ -31,9 +31,34 @@ const theme = createTheme({
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightBold: 700,
+    h1: {
+      fontSize: '2.8rem',
+    },
+    h2: {
+      fontSize: '2.5rem',
+    },
+    h3: {
+      fontSize: '2.3rem',
+    },
+    h4: {
+      fontSize: '2rem',
+    },
+    h5: {
+      fontSize: '1.8rem',
+    },
+    h6: {
+      fontSize: '1.4rem',
+    },
+    body1: {
+      fontWeight: 400,
+      fontSize: '1rem',
+   },
+   body2: {
+    fontWeight: 400,
+    fontSize: '1rem',
+  },
   }
 })
-
 
 const useStyles = makeStyles({
   root: {
@@ -44,7 +69,8 @@ const App = () => {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <AccessibilityWidget/>
+      {/* 
+      <AccessibilityWidget/> */}
       <Router>
         <Box className={classes.root}>
           <Header />

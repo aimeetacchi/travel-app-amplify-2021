@@ -30,6 +30,9 @@ const useStyles = makeStyles({
         gap: 5,
         alignItems: 'center',
     },
+    siteLogo: {
+        fontSize: '2.5rem',
+    },
     drawer: {
         '& .MuiDrawer-paper': {
             backgroundColor: '#22577A',
@@ -86,7 +89,7 @@ const Header = () => {
                         <Grid item xs={6}>
                             <Link to="/">
                             <Box className={classes.verticallyAlign}>
-                                <LocalAirportIcon/>
+                                <LocalAirportIcon className={classes.siteLogo} />
                                 <Typography variant="h5" component="h1"> Travel Logger</Typography>
                             </Box>
                             </Link>

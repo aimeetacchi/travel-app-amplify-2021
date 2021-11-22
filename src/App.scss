@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html {
+}
+
+body {
+  font-size: 14px;
+  box-sizing: inherit;
+  background: #22577A;
+  color: white;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  &:active,
+  &:hover {
+    color: white;
+  }
+}

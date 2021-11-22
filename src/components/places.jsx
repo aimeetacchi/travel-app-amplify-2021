@@ -72,19 +72,19 @@ const Places = () => {
       }
 
       // SORT BY ASC
-      function sortByASC() {
-
+      function sortByASC(value) {
+        
           console.log('sorting places by ascending order')
-          let sortedData = _.sortBy( data, 'city' );
+          let sortedData = _.sortBy( data, value);
           console.log(sortedData);
           // CALL DISPATCH TO UPDATE STATE
           dispatch(sortByAsc(sortedData))
       }
 
       // SORT BY DESC
-      function sortByDESC() {
+      function sortByDESC(value) {
         console.log('sorting places by descending order')
-        let sortedData = _.reverse(_.sortBy( data, 'city'));
+        let sortedData = _.reverse(_.sortBy( data, value));
         console.log(sortedData);
         // CALL DISPATCH TO UPDATE STATE
         dispatch(sortByDesc(sortedData))
