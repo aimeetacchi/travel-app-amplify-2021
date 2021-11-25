@@ -154,6 +154,7 @@ const Places = () => {
   }, [completeDeletedPlace])
     
     useEffect(() => {
+      // FLAG API.
       const fetchFlags = async() => {
         try {
           const requestOptions = {
@@ -202,7 +203,12 @@ const Places = () => {
     return (
       <>
         { data.length > 0 &&
-          <Search search={search} setSearch={setSearch} sortByDESC={sortByDESC} sortByASC={sortByASC} />
+          <Search 
+            search={search}
+            setSearch={setSearch}
+            sortByDESC={sortByDESC}
+            sortByASC={sortByASC}
+          />
         }
         <Box className={classes.container}>
           <Grid container spacing={4}>

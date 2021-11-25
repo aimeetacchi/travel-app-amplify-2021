@@ -24,43 +24,55 @@ import PlaceIcon from '@material-ui/icons/Place';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 
-const useStyles = makeStyles({
-    verticallyAlign: {
-        display: 'flex',
-        gap: 5,
-        alignItems: 'center',
-    },
-    siteLogo: {
-        fontSize: '2.5rem',
-    },
-    drawer: {
-        '& .MuiDrawer-paper': {
+const useStyles = makeStyles((theme) => {
+    return {
+        root: {
+            '& header': {
+                padding: '10px 0',
+            }
+        },
+        verticallyAlign: {
+            display: 'flex',
+            gap: 5,
+            alignItems: 'center',
+        },
+        siteLogo: {
+            fontSize: '2.5rem',
+        },
+        drawer: {
+            '& .MuiDrawer-paper': {
+                backgroundColor: '#22577A',
+                width: '30%',
+                [theme.breakpoints.down('xs')]: {
+                    width: '80%',
+                  },
+            }
+        },
+        menuContainer: {
+            textAlign: 'right',
+        },
+        navbar: {
             backgroundColor: '#22577A',
-        }
-    },
-    menuContainer: {
-        textAlign: 'right',
-    },
-    navbar: {
-        backgroundColor: '#22577A',
-        // marginTop: 20,
-        marginBottom: 20,
-        width: 500,
-        color:'white',
-        '& a': {
+            // marginTop: 20,
+            marginBottom: 20,
+            
+            
             color:'white',
-            textDecoration: 'none',
-            '&:hover': {
-                textDecoration: 'underline',
+            '& a': {
+                color:'white',
+                textDecoration: 'none',
+                '&:hover': {
+                    textDecoration: 'underline',
+                },
             },
         },
-    },
-    navitem: {
-        width: 'auto',
-    },
-    button: {
-        margin: '0 auto',
-        maxWidth: 250,
+        navitem: {
+            width: 'auto',
+        },
+        button: {
+            margin: '0 auto',
+            maxWidth: 250,
+        }
     }
 })
 
@@ -82,11 +94,11 @@ const Header = () => {
       };
 
     return (
-        <Box>
+        <Box className={classes.root}>
             <AppBar position="sticky">
                 <Container maxWidth="lg">
                     <Grid container alignItems="center">
-                        <Grid item xs={6}>
+                        <Grid item xs={8}>
                             <Link to="/">
                             <Box className={classes.verticallyAlign}>
                                 <LocalAirportIcon className={classes.siteLogo} />
@@ -94,7 +106,7 @@ const Header = () => {
                             </Box>
                             </Link>
                         </Grid>
-                        <Grid item xs={6} className={classes.menuContainer}>
+                        <Grid item xs={4} className={classes.menuContainer}>
                             <IconButton  onClick={toggleDrawer('right', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                                 <MenuIcon />
                             </IconButton>

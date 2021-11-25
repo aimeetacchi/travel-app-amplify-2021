@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,7 +29,12 @@ import {
       fontSize: 20,
       fontWeight: 'bold'
     },
-    placeDescription: { marginBottom: 0 },
+    placeDescription: {
+      padding: '10px 0',     
+      marginBottom: 0 
+    },
+    placeDate: {
+    },
     placeImg: {
       width: '100%',
       objectFit: 'cover',
@@ -54,8 +60,7 @@ function PlacesItem({place, deletePlace}) {
 
                 {place.description && <Typography variant="body1" className={classes.placeDescription}>{place.description}</Typography>}
                 
-                <Typography variant="body1" className={classes.placeDescription}>Date From:{place.dateVisitedFrom}</Typography>
-                <Typography variant="body1" className={classes.placeDescription}>Date To:{place.dateVisitedTo}</Typography>
+                <Typography variant="body1" className={classes.placeDate}><strong>Date:</strong> {dayjs(place.dateVisitedFrom).format('DD/MM/YYYY')} - {dayjs(place.dateVisitedTo).format('DD/MM/YYYY')}</Typography>
                  
               </Grid>
               <Grid item xs={2}> <Typography variant="body1">{place.favourite && (<FavoriteIcon/>)}</Typography></Grid>

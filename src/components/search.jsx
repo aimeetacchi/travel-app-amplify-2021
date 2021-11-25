@@ -68,6 +68,8 @@ const Search = ({search, setSearch, sortByASC, sortByDESC}) => {
                 placeholder="Search Place..."
             />
             <Typography variant="body2">Sort By:</Typography>
+
+
    
             <FormControl fullWidth>
                 <InputLabel id="asc-select">ASC</InputLabel>
@@ -80,6 +82,7 @@ const Search = ({search, setSearch, sortByASC, sortByDESC}) => {
                 >
                     <MenuItem value={"city"}>City</MenuItem>
                     <MenuItem value={"country"}>Country</MenuItem>
+                    <MenuItem value={"dateVisitedFrom"}>Date Visited</MenuItem>
                 </Select>
             </FormControl>
 
@@ -94,6 +97,7 @@ const Search = ({search, setSearch, sortByASC, sortByDESC}) => {
                 >
                     <MenuItem value={"city"}>City</MenuItem>
                     <MenuItem value={"country"}>Country</MenuItem>
+                    <MenuItem value={"dateVisitedFrom"}>Date Visited</MenuItem>
                 </Select>
             </FormControl>
         </Box>
