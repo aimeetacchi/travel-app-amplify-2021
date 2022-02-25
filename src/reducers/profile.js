@@ -10,17 +10,35 @@ const initialState = {
 const Profile = (state = initialState, {type, payload}) => {
     switch (type) {
         case Types.GET_PROFILE:
-            return {...state, data: payload }
+            return {
+                ...state,
+                data: payload
+            }
         case Types.COMPLETE_GET_PROFILE:
-            return {...state, complete: true }
+            return {
+                ...state,
+                complete: true
+            }
         case Types.FAILED_GET_PROFILE:
-            return {...state, err: payload }
+            return {
+                ...state,
+                err: payload
+            }
         case Types.CREATE_PROFILE:
-            return {...state, data: payload }
+            return {
+                ...state,
+                data: payload
+            }
         case Types.COMPLETE_CREATE_PROFILE:
-            return {...state, complete: true }
+            return {
+                ...state,
+                complete: true
+            }
         case Types.FAILED_CREATE_PROFILE:
-            return {...state, err: payload }
+            return {
+                ...state,
+                err: payload
+            }
         default:
             return state;
     }

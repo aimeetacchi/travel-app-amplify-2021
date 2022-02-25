@@ -76,7 +76,7 @@ const Places = (state = initialState, {type, payload}) => {
             console.log('running delete selected place in reducer.')
             return { 
                 ...state,
-                ...state.data.filter(el => el.id !== payload),
+                data: state.data.filter(el => el.id !== payload),
                 completeDeletedPlace: true,
              }
         case Types.FAILED_DELETE_PLACE:

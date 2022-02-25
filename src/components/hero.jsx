@@ -45,7 +45,7 @@ const Hero = () => {
     return (
     <Box className={classes.root}>
         <Box className={classes.heroContainer}>
-            <img className={classes.hero} src='./assets/images/hero001.jpg' alt="hero" />
+            <img className={classes.hero} src='https://dev.d36e3rz9n8j44b.amplifyapp.com/assets/images/hero001.jpg' alt="hero" />
             <Container maxWidth="md">
                 <Box className={classes.heroContent}>
                     <Typography variant="h3" component="h1" align="center">Keep a collection of all the places you have travelled.</Typography>
